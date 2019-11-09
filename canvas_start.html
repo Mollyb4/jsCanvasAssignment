@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+	}
+</style>
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "350" height = "500"  ></canvas>
+    <input type = "color" id = "picker"/>
+
+
+    <script>
+
+            
+            var canvas= document.querySelector("#myCanvas"); /* hashtag bc id below*/
+            var ctx= canvas.getContext("2d"); /* add this if you want to draw, ctx is commonly used for canvas*/
+            var color= "red"; 
+            var drawing = true; /*drawing variable for penup pendown*/ 
+            ctx.fillStyle = color;  
+            
+
+    
+            function draw(posX, posY){
+                 
+                if (drawing == true) {
+                    console.log("Color is" + color)
+                    ctx.fillStyle = color; 
+                    ctx.beginPath(); 
+                    console.log("I am drawing")
+                    ctx.arc(posX, posY, 10, 0, 2 * Math.PI); /* x,y,radius (10 in hw), starting angle pos, ending angle pos. to make a frowny face, put 0 behind Math.PI */
+                    ctx.fill();
+                } 
+
+            }
+
+            function clearRect(){ /*function for clearing canvas using space*/ 
+            }
+        
+            canvas.width = window.innerWidth * 0.80; 
+            canvas.height = window.innerHeight * 0.80; /*for resizing canvas*/ 
+
+            // function getMousePos(){
+            //     var mouseX = e.pageX - this.offsetLeft;
+            //     var mouseY = e.pageY - this.offsetTop;
+            // }
+            
+            
+    </script>
+    <script>
+        myCanvas.addEventListener( /* to get mouse to move*/ 
+            'mousemove', function (e){
+            console.log(e.x); 
+            console.log(e.y); 
+            draw(e.x, e.y); 
+        })
+
+
+        window.addEventListener( /* change color function */ 
+            'keydown', function (e){
+            console.log(e); 
+
+            if ( e.keyCode == 66) {
+                console.log("blue")
+                color ="blue";
+            }
+            if ( e.keyCode == 71) {
+                console.log("green")
+                color ="green";
+            }
+            if ( e.keyCode == 89) {
+                console.log("yellow")
+                color ="yellow";
+            }
+            if ( e.keyCode == 82) {
+                console.log("red")
+                color ="red";
+            }
+        })
+
+            /*write a series of if statements to change the color*/ 
+
+
+        window.addEventListener(   /*to clear canvas. begin path used to start a new path or reset a current path in this case*/ 
+                'keydown', function(e){
+                console.log(this); 
+
+                if ( e.keyCode == 32 ) {
+                    ctx.beginPath(); 
+                    ctx.clearRect(0, 0, canvas.width, canvas.height); 
+                }
+        })
+
+        window.addEventListener(
+            'keydown', function (e){
+            // console.log("hiiii"); 
+
+            if (e.keyCode == 38) {
+                    console.log("pen up")
+                    // color = "#00000000"; 
+                    drawing = false; 
+                    // ctx.strokeStyle = color;
+                    
+                    // ctx.strokeStyle = color; 
+                }
+            if (e.keyCode == 40) {
+                    console.log("pen down")
+                    // color = "pink"; 
+                    drawing = true;
+                    // break;
+                    // color = color
+                    // break;
+                }
+        })
+
+        color_picker = document.getElementById('picker'); 
+        window.addEventListener("change", function(e) {
+            color = color_picker.value; 
+            ctx.fillStyle = color; 
+        })
+           
+    </script>
+
+</body>
+</html>
